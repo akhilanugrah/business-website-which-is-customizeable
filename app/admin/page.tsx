@@ -29,8 +29,10 @@ export default function AdminPage() {
   }, [router])
 
   const handleLogout = () => {
-    logout()
-    router.push('/admin/login')
+    if (confirm('Are you sure you want to logout? Any unsaved changes will be lost.')) {
+      logout()
+      router.push('/admin/login')
+    }
   }
 
   if (checkingAuth) {
@@ -50,6 +52,15 @@ export default function AdminPage() {
     setTimeout(() => setSaved(false), 3000)
     // Reload the page to see changes
     setTimeout(() => window.location.reload(), 1000)
+  }
+
+  const handleSaveAndLogout = () => {
+    saveConfig(config)
+    setSaved(true)
+    setTimeout(() => {
+      logout()
+      router.push('/admin/login')
+    }, 1500)
   }
 
   const handleReset = () => {
@@ -112,22 +123,37 @@ export default function AdminPage() {
                 View Site
               </button>
               <button
-                onClick={handleLogout}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
-              >
-                Logout
-              </button>
-              <button
                 onClick={handleReset}
                 className="px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition"
               >
                 Reset to Default
               </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleSave}
+                  className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
+                >
+                  {saved ? '✓ Saved!' : 'Save Changes'}
+                </button>
+                {saved && (
+                  <button
+                    onClick={handleSaveAndLogout}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm"
+                    title="Save and logout"
+                  >
+                    Save & Logout
+                  </button>
+                )}
+              </div>
               <button
-                onClick={handleSave}
-                className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
+                onClick={handleLogout}
+                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-2"
+                title="Logout from admin panel"
               >
-                {saved ? '✓ Saved!' : 'Save Changes'}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
               </button>
             </div>
           </div>

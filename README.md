@@ -20,17 +20,103 @@ A modern, professional business web application built with Next.js, TypeScript, 
 
 ### Installation
 
-1. Install dependencies:
+1. **Clone the repository:**
+```bash
+git clone https://github.com/akhilanugrah/business-website-which-is-customizeable.git
+cd business-website-which-is-customizeable
+```
+
+2. **Install dependencies:**
 ```bash
 npm install
 ```
 
-2. Run the development server:
+3. **Run the development server:**
 ```bash
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the app.
+4. **Open [http://localhost:3000](http://localhost:3000)** in your browser to see the app.
+
+## Deployment
+
+This is a Next.js application that needs to be built before deployment. Here are your options:
+
+### Option 1: Deploy to Vercel (Recommended - Free & Easy)
+
+Vercel is made by the creators of Next.js and offers free hosting:
+
+1. **Push your code to GitHub** (already done!)
+2. **Go to [vercel.com](https://vercel.com)** and sign up
+3. **Import your GitHub repository**
+4. **Click Deploy** - Vercel will automatically:
+   - Detect it's a Next.js app
+   - Install dependencies (`npm install`)
+   - Build the app (`npm run build`)
+   - Deploy it with a free URL
+
+Your site will be live at: `https://your-project-name.vercel.app`
+
+### Option 2: Deploy to Netlify (Free Alternative)
+
+1. **Go to [netlify.com](https://netlify.com)** and sign up
+2. **Connect your GitHub repository**
+3. **Build settings:**
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+4. **Click Deploy**
+
+### Option 3: Self-Host on Your Own Server
+
+If you want to host it on your own server:
+
+1. **On your server, clone and install:**
+```bash
+git clone https://github.com/akhilanugrah/business-website-which-is-customizeable.git
+cd business-website-which-is-customizeable
+npm install
+```
+
+2. **Build the production version:**
+```bash
+npm run build
+```
+
+3. **Start the production server:**
+```bash
+npm start
+```
+
+The app will run on port 3000 (or the port specified by the `PORT` environment variable).
+
+4. **Use a process manager** (like PM2) to keep it running:
+```bash
+npm install -g pm2
+pm2 start npm --name "business-website" -- start
+pm2 save
+pm2 startup
+```
+
+5. **Set up a reverse proxy** (like Nginx) to serve it on port 80/443.
+
+### Option 4: Docker Deployment
+
+1. **Create a Dockerfile** (we can add this if needed)
+2. **Build and run:**
+```bash
+docker build -t business-website .
+docker run -p 3000:3000 business-website
+```
+
+## Important Notes
+
+⚠️ **This is NOT just static files** - You cannot simply copy files to a web server. This is a Node.js application that needs to:
+- Have Node.js installed on the server
+- Run `npm install` to get dependencies
+- Run `npm run build` to create the production build
+- Run `npm start` to serve the application
+
+For easiest deployment, use **Vercel** (Option 1) - it's free and handles everything automatically!
 
 ## Project Structure
 
